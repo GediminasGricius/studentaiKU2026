@@ -15,6 +15,7 @@
                     <table class="table">
                         <thead>
                             <tr>
+                                <th style="width:300px;"></th>
                                 <th>{{ __('lecturers.name') }}</th>
                                 <th>{{ __('lecturers.surname') }}</th>
                                 <th>{{ __('lecturers.email') }} </th>
@@ -29,6 +30,11 @@
                         <tbody>
                             @foreach($lecturers as $lecturer)
                                 <tr>
+                                    <td>
+                                        @if ($lecturer->photo !=null )
+                                            <img src="/storage/{{ $lecturer->photo }}" alt="" width="100%">
+                                        @endif
+                                    </td>
                                     <td>{{ $lecturer->name }}</td>
                                     <td>{{ $lecturer->surname }}</td>
                                     <td>{{ $lecturer->email }}</td>

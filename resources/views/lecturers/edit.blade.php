@@ -8,7 +8,7 @@
                     <div class="card-header">Dėstytojo redagavimas</div>
 
                     <div class="card-body">
-                        <form action="{{ route('lecturer.update', $lecturer->id) }}" method="post">
+                        <form action="{{ route('lecturer.update', $lecturer->id) }}" method="post" enctype="multipart/form-data" >
                             @csrf
                             @method('put')
 
@@ -28,6 +28,20 @@
                                 <label class="form-label">Gimimo data</label>
                                 <input type="text" class="form-control" name="birthdate"  value="{{$lecturer->birthdate}}">
                             </div>
+                            <hr>
+                            @if ($lecturer->photo==null)
+                                <div class="mb-3">
+                                    <label class="form-label">Nuotrauka: </label>
+                                    <input type="file" class="form-control" name="photo"  value="">
+                                </div>
+                            @else
+                                <img src="/storage/{{$lecturer->photo}}" alt=""> <br>
+                                <a class="btn btn-danger mt-2" href="{{ route('lecturer.deletePhoto', $lecturer->id) }}">Ištrinti nuotrauką</a>
+
+
+                            @endif
+                            <hr>
+
                             <button class="btn btn-success" type="submit">Atnaujinti įrašus</button>
 
                         </form>

@@ -26,6 +26,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/lecturer/{lecturer}', [LecturerController::class, 'edit'])->name('lecturer.edit');
         Route::put('lecturer/{lecturer}', [LecturerController::class, 'update'])->name('lecturer.update');
         Route::get('lecturer/{lecturer}/destroy', [LecturerController::class, 'destroy'])->name('lecturer.destroy');
+        Route::get('lecturer/{lecturer}/deletePhoto', [LecturerController::class, 'deletePhoto'])->name('lecturer.deletePhoto');
     });
 
 });

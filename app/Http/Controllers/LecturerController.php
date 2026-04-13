@@ -39,6 +39,8 @@ class LecturerController extends Controller
             'email.email'=>__('Invalid email address') ,
         ]);
 
+
+
         $lecturer=new Lecturer();
         $lecturer->name=$request->name;
         $lecturer->surname=$request->surname;
@@ -61,12 +63,33 @@ class LecturerController extends Controller
         $lecturer->email=$request->email;
         $lecturer->birthdate=$request->birthdate;
         $lecturer->save();
+
+
+        if ($request->hasFile('photo')){
+            $request->file('photo')->store('/public');
+            $lecturer->photo=$request->file('photo')->hashName();
+            $lecturer->save();
+
+        }
+
         return redirect()->route('lecturer.index');
     }
 
     public function destroy($id){
         Lecturer::destroy($id);
         return redirect()->route('lecturer.index');
+    }
+
+    public function deletePhoto($id){
+        $lecturer=Lecturer::find($id);
+        if ($lecturer->photo!=null){
+            unlink( storage_path().'/app/public/'.$lecturer->photo );
+            $lecturer->photo=null;
+            $lecturer->save();
+        }
+
+        return redirect()->back();
+
     }
 
 
