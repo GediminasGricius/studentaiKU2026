@@ -41,12 +41,14 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('lang.changeLanguage', "lt") }}">LT</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('lang.changeLanguage', "en") }}">EN</a>
-                        </li>
+                        @can('changeLanguage')
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('lang.changeLanguage', "lt") }}">LT</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('lang.changeLanguage', "en") }}">EN</a>
+                            </li>
+                        @endcan
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
@@ -85,6 +87,11 @@
         </nav>
 
         <main class="py-4">
+
+
+
+
+
             @yield('content')
         </main>
     </div>

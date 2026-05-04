@@ -2,6 +2,11 @@
 
 namespace App\Providers;
 
+
+use App\Models\Lecturer;
+use App\Models\Subject;
+use App\Policies\SubjectPolicy;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +24,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Gate::policy(Subject::class, SubjectPolicy::class);
+
+        Gate::define('changeLanguage', function ($user) {
+            return $user->type=='admin';
+        });
+
+        Gate::define('deleteLecturer', function ($user, Lecturer $lecturer) {
+            return $lecturer->user_id==$user->id || $user->type=='superAdmin';
+
+        });
     }
 }

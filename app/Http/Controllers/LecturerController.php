@@ -46,6 +46,7 @@ class LecturerController extends Controller
         $lecturer->surname=$request->surname;
         $lecturer->email=$request->email;
         $lecturer->birthdate=$request->birthdate;
+        $lecturer->user_id=$request->user()->id;
         $lecturer->save();
 
         return redirect()->route('lecturer.index');
@@ -75,8 +76,11 @@ class LecturerController extends Controller
         return redirect()->route('lecturer.index');
     }
 
-    public function destroy($id){
-        Lecturer::destroy($id);
+    public function destroy($id, Request $request){
+        $Lecturer=Lecturer::find($id);
+        if ($request->user()->can('deleteLecturer', $Lecturer)){
+            $Lecturer->delete();
+        }
         return redirect()->route('lecturer.index');
     }
 

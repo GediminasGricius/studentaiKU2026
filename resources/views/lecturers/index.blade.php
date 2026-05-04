@@ -44,12 +44,14 @@
                                             <div>{{ $subject->name }}</div>
                                         @endforeach
                                     </td>
-                                    @if (Auth::user()->type=='admin')
+
                                     <td>
                                         <a href="{{ route('lecturer.edit', $lecturer->id) }}" class="btn btn-info">Edit</a>
-                                        <a href="{{ route('lecturer.destroy', $lecturer->id) }}" class="btn btn-danger">Delete</a>
+                                        @can('deleteLecturer', $lecturer)
+                                            <a href="{{ route('lecturer.destroy', $lecturer->id) }}" class="btn btn-danger">Delete</a>
+                                        @endcan
                                     </td>
-                                    @endif
+
                                 </tr>
                             @endforeach
                         </tbody>

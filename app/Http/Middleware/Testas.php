@@ -15,13 +15,13 @@ class Testas
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->user()!=null  && $request->user()->type=='admin'){
+       // if ($request->user()!=null  && $request->user()->type=='admin'){
 
             $response = $next($request);
             return $response;
-        }else{
-            return redirect()->route('lecturer.index');
-        }
+       // }else{
+        //    return redirect()->route('lecturer.index');
+       // }
 
 
     }
