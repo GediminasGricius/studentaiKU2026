@@ -16,8 +16,15 @@ class LecturerController extends Controller
     }
 
     public function index(Request $request){
-        $lecturers=Lecturer::all();
-        return view('lecturers.index', compact('lecturers'));
+        $orderField=$request->session()->get('lecturerOrderField', 'surname');
+        $order=$request->session()->get('lecturerOrder', 'ASC');
+
+        $filterName=$request->session()->get('filterName');
+        $filterSurname=$request->session()->get('filterSurname');
+        $filterEmail=$request->session()->get('filterEmail');
+
+        $lecturers=Lecturer::filterRecords(name: $filterName, surname: $filterSurname, email: $filterEmail)-> orderBy($orderField, $order )  ->   get();
+        return view('lecturers.index', compact('lecturers', 'orderField', 'order', 'filterName', 'filterSurname', 'filterEmail'));
     }
 
     public function create(){
@@ -94,6 +101,24 @@ class LecturerController extends Controller
 
         return redirect()->back();
 
+    }
+
+    public function orderBy($field, $order, Request $request){
+        $request->session()->put('lecturerOrderField', $field);
+        $request->session()->put('lecturerOrder', $order);
+        return redirect()->back();
+    }
+
+    public function filterBy(Request $request){
+        if ($request->clearFilter==1){
+            $request->session()->forget(['filterName', 'filterSurname', 'filterEmail']);
+        }else{
+            $request->session()->put('filterName', $request->filterName);
+            $request->session()->put('filterSurname', $request->filterSurname);
+            $request->session()->put('filterEmail', $request->filterEmail);
+
+        }
+        return redirect()->back();
     }
 
 

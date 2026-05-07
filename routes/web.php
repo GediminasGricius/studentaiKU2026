@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/', [LecturerController::class, 'index'])->name('lecturer.index');
+    Route::get('/orderBy/{field}/{order}', [LecturerController::class, 'orderBy'])->name('lecturer.orderBy');
+    Route::post('/filterBy', [LecturerController::class, 'filterBy'])->name('lecturer.filterBy');
 
     Route::get('/changeLanguage/{lang}', [LangController::class, 'changeLanguage'])->name('lang.changeLanguage');
 
